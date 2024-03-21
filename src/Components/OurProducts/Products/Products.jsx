@@ -20,7 +20,10 @@ function Products() {
                     </div>
                     <div className="h-1/2 flex flex-col justify-between py-1 px-2">
                         <span className="pt-10">{product.title}</span>
-                        <span className='text-2xl font-semibold'>$ {product.price}</span>
+                        <div className='flex justify-between font-semibold'>
+                          <span className='text-2xl'>$ {product.price}</span>
+                          <i className='bx bx-cart-add cursor-pointer text-3xl p-1'></i>
+                        </div>
                     </div>
                 </div>
             )}
