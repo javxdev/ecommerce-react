@@ -13,7 +13,7 @@ function Products() {
         <div className='max-w-5xl mx-auto flex flex-wrap gap-y-20 gap-x-5 my-10'>
 
             {data?.map((product) =>
-                <div key={product.id} className="w-60 h-96 pb-2 shadow-lg flex flex-col justify-between">
+                <div key={product.id} className="mx-auto md:mx-0 w-60 h-96 pb-2 shadow-lg flex flex-col justify-between">
                     <div className="my-auto px-2 ">
                         <img className="bg-cover  max-h-[200px] bg-center mx-auto bg-white" 
                         src={product.image} alt={product.title} />

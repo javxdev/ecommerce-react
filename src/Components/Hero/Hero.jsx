@@ -1,7 +1,7 @@
 function Hero() {
   return (
-        <section className="max-w-5xl gap-y-5 mx-auto pt-60 font-['hind']">
-          <div className=" py-12 px-10 bg-[#FFF3E3] w-1/2 ml-auto flex flex-col font-semibold shadow-xl">
+        <section className="max-w-5xl mx-auto gap-y-5 pt-20 md:pt-60 font-['hind']">
+          <div className=" py-12 px-10 bg-[#FFF3E3] md:w-1/2 ml-auto flex flex-col font-semibold shadow-xl">
             <small>Nuevos productos</small>
             <h1 className="text-[#B88E2F] pt-1 text-5xl font-bold">Conocé nuestra nueva categoría de productos</h1>
             <small className="mt-4">Lorem ipsum dolor sit, amet consectetur adipisicing elit. At est minima.</small>
