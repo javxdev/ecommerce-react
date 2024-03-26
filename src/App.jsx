@@ -23,6 +23,10 @@ function App() {
     }
   }
 
+  function removeFromCart (id) {
+    setCart(prevCart => prevCart.filter(product => product.id !== id))
+  }
+
     useEffect(() => {
         fetch('https://fakestoreapi.com/products')
             .then(res => res.json())
@@ -33,6 +37,7 @@ function App() {
     <>
     <Header
     cart={cart}
+    removeFromCart={removeFromCart}
     />
     <div className="min-h-screen bg-[url('./assets/bg-main.png')] bg-cover object-center">
       <Hero/>

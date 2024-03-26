@@ -1,10 +1,12 @@
+import { useMemo } from "react";
+
 import NavigationLinks from "./NavigationLinks";
 import SearchInput from "./SearchInput";
 
-function Header({cart}) {
-  const cartTotal = () => cart.reduce((total, product) => total + (product.price * product.quantity), 0)
+function Header({cart, removeFromCart}) {
+  const cartTotal = useMemo(() => cart.reduce( (total, product) => total + (product.price * product.quantity), 0), [cart] )
+  const isEmpty = useMemo(() => cart.length === 0, [cart])
 
-  const isEmpty = () => cart.length === 0
   return (
     <div className="bg-white/95 w-full top-0 sticky">
       <div className="max-w-5xl mx-auto flex items-center justify-between py-4 px-2 md-px-0">
@@ -18,12 +20,12 @@ function Header({cart}) {
 
           <i className='bx bx-shopping-bag text-4xl'></i>
 
-          <div class="absolute top-8 -left-64 lg:-left-80 z-10 hidden group-hover:block bg-neutral-100 rounded-lg max-h-[500px] shadow-lg lg:max-h-[700px] overflow-y-auto">
+          <div className="absolute top-8 -left-64 lg:-left-80 z-10 hidden group-hover:block bg-neutral-100 rounded-lg max-h-[500px] shadow-lg lg:max-h-[700px] overflow-y-auto">
 
-          {isEmpty() ? 
+          {isEmpty ? 
 
           (<div className="flex items-center text-center font-semibold text-xl">
-              <h3 className="w-64 lg:w-96 h-20 pt-6">El carrito está vacío  
+              <h3 className="w-64 lg:w-96 h-20 pt-6">Tu bolsa está vacía  
                 <i className='bx bx-confused'></i>
               </h3>
           </div>)
@@ -41,8 +43,8 @@ function Header({cart}) {
               </thead>
               <tbody>
                 {cart.map(product => (
-                  <tr key={product.id} class="text-center">
-                    <td className="p-1 lg:px-4 lg:py-2"><img class="w-10 mx-auto" src={product.image} alt="" /></td>
+                  <tr key={product.id} className="text-center">
+                    <td className="p-1 lg:px-4 lg:py-2"><img className="w-10 mx-auto" src={product.image} alt="" /></td>
                     <td className="p-1 lg:px-4 lg:py-2 text-sm">{product.title}</td>
                     <td className="p-1 lg:px-4 lg:py-2">${product.price}</td>
                     <td className="p-1 lg:px-4 lg:py-2">
@@ -58,6 +60,11 @@ function Header({cart}) {
                         +
                       </button>
                     </td>
+                    <td>
+                      <i className='bx bx-x bg-red-600 p-1 lg:mr-2 rounded-full text-white'
+                      onClick={() => removeFromCart(product.id)}
+                      ></i>
+                    </td>
                   </tr>
                   
                 ))}
@@ -65,7 +72,7 @@ function Header({cart}) {
             </table>
             
             <div className="bg-neutral-300 mt-4">
-              <p className="pl-4 py-4">Total: <strong>$ {cartTotal()}</strong></p>
+              <p className="pl-4 py-4">Total: <strong>$ {cartTotal}</strong></p>
               <button className="w-full py-4 bg-black text-white">Vaciar Bolsa</button>
             </div>
             </>
