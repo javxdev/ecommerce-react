@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 
 import Footer from "./Components/Footer/Footer"
 import  Header from "./Components/Header/Header"
@@ -6,13 +7,41 @@ import Ourproducts from "./Components/OurProducts/Ourproducts"
 
 
 function App() {
+  const [data, setData] = useState([]);
+  const [cart, setCart] = useState([])
+
+  function addToCart(item){
+    const itemExists = cart.findIndex(product => product.id == item.id)
+    if (itemExists < 0){
+        item.quantity = 1
+        setCart([...cart, item])
+    }
+    else {
+        const updatedCart = [...cart]
+        updatedCart[itemExists].quantity++
+        setCart(updatedCart)
+    }
+  }
+
+    useEffect(() => {
+        fetch('https://fakestoreapi.com/products')
+            .then(res => res.json())
+            .then(data => setData(data));
+    }, []);
+
   return (
     <>
-    <Header/>
+    <Header
+    cart={cart}
+    />
     <div className="min-h-screen bg-[url('./assets/bg-main.png')] bg-cover object-center">
       <Hero/>
     </div>
-    <Ourproducts/>
+    <Ourproducts
+    data={data}
+    cart={cart}
+    addToCart={addToCart}
+    />
     <Footer/>
     </>
   )
