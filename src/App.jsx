@@ -7,24 +7,70 @@ import Ourproducts from "./Components/OurProducts/Ourproducts"
 
 
 function App() {
-  const [data, setData] = useState([]);
-  const [cart, setCart] = useState([])
 
-  function addToCart(item){
-    const itemExists = cart.findIndex(product => product.id == item.id)
-    if (itemExists < 0){
-        item.quantity = 1
-        setCart([...cart, item])
-    }
-    else {
-        const updatedCart = [...cart]
-        updatedCart[itemExists].quantity++
-        setCart(updatedCart)
-    }
+  const initialBag = () => {
+    const localStorageBag = localStorage.getItem('bag')
+    return localStorageBag ? JSON.parse(localStorageBag) : []
   }
 
-  function removeFromCart (id) {
-    setCart(prevCart => prevCart.filter(product => product.id !== id))
+  const [data, setData] = useState([]);
+  const [bag, setBag] = useState(initialBag)
+
+  const MAX_PRODUCTS = 10;
+  const MIN_PRODUCTS = 1;
+
+  useEffect(() => {
+    localStorage.setItem('bag', JSON.stringify(bag))
+  }, [bag])
+
+  function addToBag(item){
+    const itemExists = bag.findIndex(product => product.id == item.id)
+    
+    if (itemExists < 0){
+        item.quantity = 1
+        setBag([...bag, item])
+    }
+    else {
+        if (bag[itemExists].quantity >= MAX_PRODUCTS) return
+        const updatedBag = [...bag]
+        updatedBag[itemExists].quantity++
+        setBag(updatedBag)
+    }
+    
+  }
+
+  function removeFromBag (id) {
+    setBag(prevBag => prevBag.filter(product => product.id !== id))
+  }
+
+  function increaseQuantity (id) {
+    const updatedBag =  bag.map(product =>{
+      if(product.id === id && product.quantity < MAX_PRODUCTS){      
+      return {
+        ...product,
+        quantity: product.quantity + 1
+      }
+    }
+    return product
+    })
+    setBag(updatedBag)
+  }
+
+  function decreaseQuantity (id) {
+    const updatedBag =  bag.map(product =>{
+      if(product.id === id && product.quantity > MIN_PRODUCTS){      
+      return {
+        ...product,
+        quantity: product.quantity -1
+      }
+    }
+    return product
+    })
+    setBag(updatedBag)
+  }
+
+  function clearBag(){
+    setBag([])
   }
 
     useEffect(() => {
@@ -36,16 +82,19 @@ function App() {
   return (
     <>
     <Header
-    cart={cart}
-    removeFromCart={removeFromCart}
+    bag={bag}
+    removeFromBag={removeFromBag}
+    increaseQuantity={increaseQuantity}
+    decreaseQuantity={decreaseQuantity}
+    clearBag={clearBag}
     />
     <div className="min-h-screen bg-[url('./assets/bg-main.png')] bg-cover object-center">
       <Hero/>
     </div>
     <Ourproducts
     data={data}
-    cart={cart}
-    addToCart={addToCart}
+    bag={bag}
+    addToBag={addToBag}
     />
     <Footer/>
     </>

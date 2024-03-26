@@ -3,9 +3,10 @@ import { useMemo } from "react";
 import NavigationLinks from "./NavigationLinks";
 import SearchInput from "./SearchInput";
 
-function Header({cart, removeFromCart}) {
-  const cartTotal = useMemo(() => cart.reduce( (total, product) => total + (product.price * product.quantity), 0), [cart] )
-  const isEmpty = useMemo(() => cart.length === 0, [cart])
+function Header({bag, removeFromBag, increaseQuantity, decreaseQuantity, clearBag}) {
+
+  const bagTotal = useMemo(() => bag.reduce( (total, product) => total + (product.price * product.quantity), 0), [bag] )
+  const isEmpty = useMemo(() => bag.length === 0, [bag])
 
   return (
     <div className="bg-white/95 w-full top-0 sticky">
@@ -42,7 +43,7 @@ function Header({cart, removeFromCart}) {
                 </tr>
               </thead>
               <tbody>
-                {cart.map(product => (
+                {bag.map(product => (
                   <tr key={product.id} className="text-center">
                     <td className="p-1 lg:px-4 lg:py-2"><img className="w-10 mx-auto" src={product.image} alt="" /></td>
                     <td className="p-1 lg:px-4 lg:py-2 text-sm">{product.title}</td>
@@ -50,19 +51,21 @@ function Header({cart, removeFromCart}) {
                     <td className="p-1 lg:px-4 lg:py-2">
                       <button
                         type="button"
-                        className="w-4 mr-1 bg-black text-white">
+                        className="w-4 mr-1 bg-black text-white"
+                        onClick={() => decreaseQuantity(product.id)}>
                         -
                       </button>
                       {product.quantity}
                       <button
                         type="button"
-                        className="w-4 ml-1 bg-black text-white">
+                        className="w-4 ml-1 bg-black text-white"
+                        onClick={() => increaseQuantity(product.id)}>
                         +
                       </button>
                     </td>
                     <td>
                       <i className='bx bx-x bg-red-600 p-1 lg:mr-2 rounded-full text-white'
-                      onClick={() => removeFromCart(product.id)}
+                      onClick={() => removeFromBag(product.id)}
                       ></i>
                     </td>
                   </tr>
@@ -72,8 +75,10 @@ function Header({cart, removeFromCart}) {
             </table>
             
             <div className="bg-neutral-300 mt-4">
-              <p className="pl-4 py-4">Total: <strong>$ {cartTotal}</strong></p>
-              <button className="w-full py-4 bg-black text-white">Vaciar Bolsa</button>
+              <p className="pl-4 py-4">Total: <strong>$ {bagTotal}</strong></p>
+              <button className="w-full py-4 bg-black text-white"
+              onClick={clearBag}
+              >Vaciar Bolsa</button>
             </div>
             </>
             )}

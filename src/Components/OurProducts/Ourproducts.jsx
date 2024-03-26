@@ -1,6 +1,6 @@
 import Products from './Products/Products'
 
-function Ourproducts({data, addToCart}) {
+function Ourproducts({data, addToBag}) {
 
 
   return (
@@ -9,7 +9,7 @@ function Ourproducts({data, addToCart}) {
         <p className='text-center text-sm pb-10'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, sunt</p>
         <div className='max-w-5xl mx-auto'>
             <Products
-            addToCart={addToCart}
+            addToBag={addToBag}
             data={data}
             />
         </div>
