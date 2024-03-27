@@ -1,12 +1,8 @@
-import { useMemo } from "react";
-
 import NavigationLinks from "./NavigationLinks";
 import SearchInput from "./SearchInput";
 
-function Header({bag, removeFromBag, increaseQuantity, decreaseQuantity, clearBag}) {
+function Header({bag, removeFromBag, increaseQuantity, decreaseQuantity, clearBag, isEmpty, bagTotal}) {
 
-  const bagTotal = useMemo(() => bag.reduce( (total, product) => total + (product.price * product.quantity), 0), [bag] )
-  const isEmpty = useMemo(() => bag.length === 0, [bag])
 
   return (
     <div className="bg-white/95 w-full top-0 sticky">
