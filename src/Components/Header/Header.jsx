@@ -1,17 +1,23 @@
 import NavigationLinks from "./NavigationLinks";
-import SearchInput from "./SearchInput";
 
 function Header({bag, removeFromBag, increaseQuantity, decreaseQuantity, clearBag, isEmpty, bagTotal}) {
 
 
   return (
     <div className="bg-white/95 w-full top-0 sticky">
-      <div className="max-w-5xl mx-auto flex items-center justify-between py-4 px-2 md-px-0">
+      <div className="max-w-5xl mx-auto flex items-center justify-between py-3 px-2 md-px-0">
         <span className="text-2xl font-bold">Javi<span className="text-blue-500">Shop</span></span>
         
-        <SearchInput />
+        <div className="hidden md:flex w-80 items-center bg-neutral-100 border-[1px] border-neutral-500 p-1 rounded-md gap-x-2">
+          <input className="bg-transparent w-full text-md pl-2 outline-none border-none" 
+          type="text" name="" id="" 
+          placeholder="Buscar productos..." maxLength={30}/>
+          
+          <i className='bx bx-search text-2xl text-neutral-900 font-semibold cursor-pointer'></i>
+        </div>
 
-        <NavigationLinks ulStyles="gap-x-5 text-md hidden md:flex" liStyles="cursor-pointer text-xl font-['hind']"/>
+        <NavigationLinks ulStyles="gap-x-5 text-md hidden md:flex" liStyles="py-2 px-3 rounded hover:bg-neutral-100 cursor-pointer text-xl font-['hind']"/>
+        
         
         <div className="flex items-center relative cursor-pointer group">
 
